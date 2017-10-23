@@ -1,0 +1,73 @@
+
+//reste à modifier les integer
+create table artist (
+  id   integer,
+  name varchar2(200),
+  constraint artist$pk primary key (id),
+  constraint artist$name$nn check (name is not null)
+);
+create table certification (
+  id          integer,
+  name        varchar2(100),
+  description varchar2(100),
+  constraint cert$pk primary key (id),
+  constraint cert$name$nn check (name is not null),
+  constraint cert$name$un unique (name)
+);
+
+create table status (
+  id          integer,
+  name        varchar2(100),
+  constraint status$pk primary key (id),
+  constraint status$name$nn check (name is not null),
+  constraint status$name$un unique (name)
+);
+
+create table genre (
+  id   integer,
+  name varchar2(100),
+  constraint genre$pk primary key (id),
+  constraint genre$name$nn check (name is not null),
+  constraint genre$name$un unique (name)
+);
+
+create table movie (
+  id            integer,
+  title         varchar2(100),
+  status        integer,
+  tagline       varchar2(100),
+  release_date  date,
+  vote_average  float,
+  vote_count    integer,
+  certification integer,
+  runtime       integer,
+  budget        integer,
+  poster        blob,
+  constraint movie$pk primary key (id),
+  constraint movie$title$nn check (title is not null)
+);
+
+create table movie_director (
+  movie    integer,
+  director integer,
+  constraint m_d$pk primary key (movie, director),
+  constraint m_d$fkd foreign key (director) references artist(id),
+  constraint m_d$fkm foreign key (movie) references movie(id)
+);
+
+create table movie_genre (
+  genre integer,
+  movie integer,
+  constraint m_g$pk primary key (genre, movie),
+  constraint m_g$fkm foreign key (movie) references movie(id),
+  constraint m_g$fkg foreign key (genre) references genre(id)
+  ) ;
+
+create table movie_actor
+  (
+  movie  integer,
+  actor integer,
+  constraint m_a$pk primary key (movie, actor),
+  constraint m_a$fka foreign key (actor) references artist(id),
+  constraint m_a$fkm foreign key (movie) references movie(id)
+);

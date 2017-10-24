@@ -9,7 +9,7 @@ drop table movie_actor;
 
 create table artist (
   id   number(7,0),
-  name varchar2(39),
+  name varchar2(20),
   constraint artist$pk primary key (id),
   constraint artist$name$nn check (name is not null)
 );
@@ -33,7 +33,7 @@ create table status (
 
 create table genre (
   id   number(5,0),
-  name varchar2(11),
+  name varchar2(16),
   constraint genre$pk primary key (id),
   constraint genre$name$nn check (name is not null),
   constraint genre$name$un unique (name)  

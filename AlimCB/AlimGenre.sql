@@ -7,7 +7,6 @@ declare
     str  VARCHAR2(16 CHAR));
    Type VAR_DATA is table of EMP_DATA;
 
-  fid utl_file.file_type;
   V_DATA VAR_DATA;
   
 Begin  

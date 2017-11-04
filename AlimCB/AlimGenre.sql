@@ -1,4 +1,4 @@
-create or replace procedure TEST_GENRE as
+create or replace procedure ALIM_GENRE as
 Begin
 
 declare
@@ -34,4 +34,4 @@ FROM sub;
        insert_genre(V_DATA(indx).Nbr, V_DATA(indx).str);
    END LOOP;
 end;
-end TEST_GENRE;
+end ALIM_GENRE;

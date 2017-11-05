@@ -14,23 +14,21 @@ BEGIN
   dbms_output.put_line(film.id || ' ' ||
                trim(film.title) || ' ' || 
                trim(film.status) || ' ' ||
-               trim(film.tagline) || ' ' ||
                film.release_date || ' ' ||
                film.vote_average || ' ' ||
+               film.vote_count || ' ' ||
                trim(film.certification) || ' ' ||
                film.runtime || ' ' ||
-               film.budget || ' ' ||
                film.poster_path);
 
   insert_movie(film.id, 
                trim(film.title), 
-               trim(film.status), 
-               trim(film.tagline), 
+               trim(film.status),  
                film.release_date, 
                film.vote_average,
+               film.vote_count,
                trim(film.certification), 
-               film.runtime, 
-               film.budget, 
+               film.runtime,  
                film.poster_path);
                    
     i := 1;

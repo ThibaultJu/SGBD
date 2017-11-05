@@ -46,7 +46,7 @@ create table movie (
   release_date  date,
   vote_average  number(2,2),
   vote_count    number(5,0),
-  certification number(2,0),
+  certification VARCHAR2(5),
   runtime       number(5,0),
   poster        blob,
   constraint movie$pk primary key (id),

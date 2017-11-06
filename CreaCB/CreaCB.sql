@@ -1,11 +1,13 @@
-drop table artist;
-drop table certification;
-drop table status;
-drop table genre;
-drop table movie;
-drop table movie_director;
-drop table movie_genre;
-drop table movie_actor;
+DROP TABLE MOVIE_GENRE CASCADE CONSTRAINTS;
+DROP TABLE MOVIE_DIRECTOR CASCADE CONSTRAINTS;
+DROP TABLE MOVIE_ARTIST CASCADE CONSTRAINTS;
+DROP TABLE GENRE CASCADE CONSTRAINTS;
+DROP TABLE ARTIST CASCADE CONSTRAINTS;
+DROP TABLE MOVIE CASCADE CONSTRAINTS;
+DROP TABLE STATUT CASCADE CONSTRAINTS;
+DROP TABLE CERTIFICATION CASCADE CONSTRAINTS;
+DROP TABLE DIRECTOR CASCADE CONSTRAINTS;
+DROP TABLE LOG;
 
 create table artist (
   id   number(7,0),
@@ -42,9 +44,9 @@ create table genre (
 create table movie (
   id            number(6,0),
   title         varchar2(43),
-  status        number(1,0),
+  status        VARCHAR2(8 CHAR),
   release_date  date,
-  vote_average  number(2,2),
+  vote_average  number(2,1),
   vote_count    number(5,0),
   certification VARCHAR2(5),
   runtime       number(5,0),
@@ -78,4 +80,9 @@ create table movie_actor
   constraint m_a$pk primary key (movie, actor),
   constraint m_a$fk foreign key (actor) references artist(id),
   constraint m_a$fk2 foreign key (movie) references movie(id)
+);
+CREATE TABLE LOG
+(
+  err             VARCHAR2(200),
+  daterr          DATE
 );

@@ -48,7 +48,7 @@ BEGIN
       found := owa_pattern.match(str2, '^(.*)' || unistr('\2024') || '(.*)' || unistr('\2024') || '(.*)$', res);
       if found then
         insert_artist(res(1), res(2));
-        --insert_movie_artist(film.id, res(1));
+        insert_movie_actor(film.id, res(1));
       end if;
       i := i +1;
     end loop;
@@ -63,7 +63,7 @@ BEGIN
       found := owa_pattern.match(str2, '^(.*)' || unistr('\2024') || '(.*)$', res);
       if found then
         insert_director(res(1), res(2));
-        --insert_movie_director(film.id, res(1));
+        insert_movie_director(film.id, res(1));
       end if;
       i := i +1;
     end loop;

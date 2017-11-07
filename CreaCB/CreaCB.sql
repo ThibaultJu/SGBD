@@ -22,10 +22,12 @@ create table certification (
   constraint cert$pk primary key (id),
   constraint cert$name$nn check (name is not null)
 );
-CREATE TABLE DIRECTOR
+create table director 
 (
-  id              NUMBER(9) CONSTRAINT CP_DIRECTOR PRIMARY KEY,
-  name            VARCHAR2(49 CHAR) NOT NULL
+  id   number(7,0),
+  name varchar2(20),
+  constraint director$pk primary key (id),
+  constraint director$name$nn check (name is not null)
 );
 create table status (
   id          number(6,0),

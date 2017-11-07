@@ -36,28 +36,32 @@ BEGIN
                v_runtime || ' ' ||
                v_poster);
   --title
-  if (LENGTH(p_title) <= 59) 
+  if (LENGTH(p_title) <= 43) 
     then v_title := p_title;
-  else if (LENGTH(p_title) > 59)
-    then v_title := SUBSTR(p_title, 1, 59);
+  else if (LENGTH(p_title) > 43)
+    then v_title := SUBSTR(p_title, 1, 43);
     PROC_LOG('insert_movie: ' || p_id || ' title trunked ' || LENGTH(p_title) || ' => ' || LENGTH(v_title));
   end if;
   end if;
   --status
   if (p_status = NULL or p_status = 'Post Production' or p_status = 'Rumored' or p_status = 'Released' or p_status = 'In Production' or p_status = 'Planned' or p_status = 'Canceled') then v_status := p_status;
   else v_status := null;
-      PROC_LOG('insert_movie: ' || p_id || ' statut set ├а NULL');
+      PROC_LOG('insert_movie: ' || p_id || ' statut set ра NULL');
   end if;
   --release_date
   v_release_date := p_release_date;
   --vote_average
-  v_vote_average := p_vote_average;
+  IF(p_vote_average>=0 AND p_vote_average<=0)
+  THEN v_vote_average := p_vote_average;
+  else v_vote_average := 0;
+  PROC_LOG('insert_movie: vote avg set р 0');
+  END IF;
   --vote_count
   v_vote_count   := p_vote_count;
   --certification
   IF (p_certif = NULL OR p_certif = 'PG-13' OR p_certif = 'G' OR p_certif = 'PG' OR p_certif = 'R' OR p_certif = 'NC-17') THEN v_certif := p_certif;
   ELSE v_certif := NULL;
-    PROC_LOG('insert_certification: ' || p_id || ' set ├а NULL');
+    PROC_LOG('insert_movie: ' || p_id || ' set ра NULL');
   END IF;
   --runtime
   if(p_runtime > 200) then v_runtime := NULL;

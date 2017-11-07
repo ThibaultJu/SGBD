@@ -19,7 +19,6 @@ create table artist (
 create table certification (
   id          number(2,0),
   name        varchar2(5),
-  description varchar2(20),
   constraint cert$pk primary key (id),
   constraint cert$name$nn check (name is not null),
   constraint cert$name$un unique (name)

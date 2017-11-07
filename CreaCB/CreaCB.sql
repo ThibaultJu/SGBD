@@ -4,7 +4,7 @@ DROP TABLE MOVIE_ARTIST CASCADE CONSTRAINTS;
 DROP TABLE GENRE CASCADE CONSTRAINTS;
 DROP TABLE ARTIST CASCADE CONSTRAINTS;
 DROP TABLE MOVIE CASCADE CONSTRAINTS;
-DROP TABLE STATUT CASCADE CONSTRAINTS;
+DROP TABLE STATUS CASCADE CONSTRAINTS;
 DROP TABLE CERTIFICATION CASCADE CONSTRAINTS;
 DROP TABLE DIRECTOR CASCADE CONSTRAINTS;
 DROP TABLE LOG;
@@ -26,7 +26,7 @@ create table certification (
 );
 
 create table status (
-  id          number(1,0),
+  id          number(6,0),
   name        varchar2(8),
   constraint status$pk primary key (id),
   constraint status$name$nn check (name is not null),

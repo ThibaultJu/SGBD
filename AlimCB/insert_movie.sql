@@ -10,21 +10,21 @@ create or replace PROCEDURE INSERT_MOVIE
   p_runtime           IN NUMBER,
   p_poster            IN VARCHAR2
 )AS
-  v_id                number(6,0);
-  v_title             VARCHAR2(43 CHAR);
+  v_id                NUMBER;
+  v_title             VARCHAR2(59 CHAR);
   v_status            VARCHAR2(8 CHAR);
   v_release_date      DATE;
-  v_vote_average      number(2,1);
-  v_vote_count        number(5,0);
+  v_vote_average      NUMBER;
+  v_vote_count        NUMBER;
   v_certif            VARCHAR2(5 CHAR);
-  v_runtime           number(5,0);
+  v_runtime           NUMBER;
   v_poster            VARCHAR2(100 CHAR);
-  
+
   post                BLOB;
-  
+
   E_entite            EXCEPTION;
   PRAGMA              EXCEPTION_INIT(E_entite,-01);
-  
+
 BEGIN
   dbms_output.put_line(v_id || ' ' ||
                v_title || ' ' || 
@@ -36,14 +36,14 @@ BEGIN
                v_runtime || ' ' ||
                v_poster);
   --title
-  if (LENGTH(p_title) <= 43) 
+  if (LENGTH(p_title) <= 59) 
     then v_title := p_title;
-  else if (LENGTH(p_title) > 43)
-    then v_title := SUBSTR(p_title, 1, 43);
+  else if (LENGTH(p_title) > 59)
+    then v_title := SUBSTR(p_title, 1, 59);
     PROC_LOG('insert_movie: ' || p_id || ' title trunked ' || LENGTH(p_title) || ' => ' || LENGTH(v_title));
   end if;
   end if;
-  --statut
+  --status
   if (p_status = NULL or p_status = 'Post Production' or p_status = 'Rumored' or p_status = 'Released' or p_status = 'In Production' or p_status = 'Planned' or p_status = 'Canceled') then v_status := p_status;
   else v_status := null;
       PROC_LOG('insert_movie: ' || p_id || ' statut set à NULL');
@@ -75,6 +75,7 @@ BEGIN
    PROC_LOG('BLOB:' || 'Une erreur est survenue le blob est donc mis à NULL');
   END;
   insert into movie values(p_id, v_title, v_status, v_release_date, v_vote_average,v_vote_count, v_certif, v_runtime, post);
+dbms_output.put_line('INSERT OK' );
 EXCEPTION
   WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
   WHEN OTHERS THEN PROC_LOG('insert_movie: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);

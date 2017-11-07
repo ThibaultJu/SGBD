@@ -3,7 +3,7 @@ create or replace PROCEDURE INSERT_MOVIE_GENRE(p_id IN NUMBER, p_idGenre IN NUMB
 
 BEGIN
 
-  INSERT INTO MOVIE_GENRE VALUES(p_id, p_idGenre);
+  INSERT INTO MOVIE_GENRE VALUES(p_idGenre,p_id );
 
 EXCEPTION
   WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie_genre: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);

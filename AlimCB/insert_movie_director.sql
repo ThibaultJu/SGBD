@@ -1,0 +1,11 @@
+create or replace PROCEDURE INSERT_MOVIE_DIRECTOR(p_id IN NUMBER, p_idDirector IN NUMBER) AS
+
+
+BEGIN
+
+  INSERT INTO MOVIE_DIRECTOR VALUES(p_id, p_idDirector);
+
+EXCEPTION
+  WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie_director: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
+  WHEN OTHERS THEN PROC_LOG('insert_movie_director: ' || p_id || ' SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
+END INSERT_MOVIE_DIRECTOR;

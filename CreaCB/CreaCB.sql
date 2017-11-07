@@ -1,6 +1,6 @@
 DROP TABLE MOVIE_GENRE CASCADE CONSTRAINTS;
 DROP TABLE MOVIE_DIRECTOR CASCADE CONSTRAINTS;
-DROP TABLE MOVIE_ARTIST CASCADE CONSTRAINTS;
+DROP TABLE MOVIE_ACTOR CASCADE CONSTRAINTS;
 DROP TABLE GENRE CASCADE CONSTRAINTS;
 DROP TABLE ARTIST CASCADE CONSTRAINTS;
 DROP TABLE MOVIE CASCADE CONSTRAINTS;
@@ -24,7 +24,11 @@ create table certification (
   constraint cert$name$nn check (name is not null),
   constraint cert$name$un unique (name)
 );
-
+CREATE TABLE DIRECTOR
+(
+  id              NUMBER(9) CONSTRAINT CP_DIRECTOR PRIMARY KEY,
+  name            VARCHAR2(49 CHAR) NOT NULL
+);
 create table status (
   id          number(6,0),
   name        varchar2(8),

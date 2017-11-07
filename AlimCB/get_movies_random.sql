@@ -78,6 +78,7 @@ BEGIN
 
       if found then
         insert_genre(res(1), res(2));
+        dbms_output.put_line(film.id || '            '|| res(1) );
         insert_movie_genre(film.id, res(1));
       end if;
       i := i +1;

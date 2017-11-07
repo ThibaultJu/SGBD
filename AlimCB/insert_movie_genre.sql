@@ -1,0 +1,10 @@
+create or replace PROCEDURE INSERT_MOVIE_GENRE(p_id IN NUMBER, p_idGenre IN NUMBER) AS
+
+BEGIN
+
+  INSERT INTO MOVIE_GENRE VALUES(p_id, p_idGenre);
+
+EXCEPTION
+  WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie_genre: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
+  WHEN OTHERS THEN PROC_LOG('insert_movie_genre: ' || p_id || ' SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
+END INSERT_MOVIE_GENRE;

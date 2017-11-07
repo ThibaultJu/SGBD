@@ -17,12 +17,10 @@ create table artist (
 );
 
 create table certification (
-  id          number(2,0),
+  id          number(6,0),
   name        varchar2(5),
-  description varchar2(20),
   constraint cert$pk primary key (id),
-  constraint cert$name$nn check (name is not null),
-  constraint cert$name$un unique (name)
+  constraint cert$name$nn check (name is not null)
 );
 CREATE TABLE DIRECTOR
 (
@@ -33,8 +31,7 @@ create table status (
   id          number(6,0),
   name        varchar2(8),
   constraint status$pk primary key (id),
-  constraint status$name$nn check (name is not null),
-  constraint status$name$un unique (name)
+  constraint status$name$nn check (name is not null)
 );
 
 create table genre (

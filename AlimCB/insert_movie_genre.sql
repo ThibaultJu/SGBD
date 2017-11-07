@@ -1,5 +1,6 @@
 create or replace PROCEDURE INSERT_MOVIE_GENRE(p_id IN NUMBER, p_idGenre IN NUMBER) AS
 
+
 BEGIN
 
   INSERT INTO MOVIE_GENRE VALUES(p_id, p_idGenre);

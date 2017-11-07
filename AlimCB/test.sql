@@ -1,5 +1,5 @@
 begin 
-GET_MOVIE(27205);
+GET_MOVIES_RANDOM(10);
 end;
 
 select * from genre;

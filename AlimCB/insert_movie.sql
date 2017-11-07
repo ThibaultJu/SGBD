@@ -11,7 +11,7 @@ create or replace PROCEDURE INSERT_MOVIE
   p_poster            IN VARCHAR2
 )AS
   v_id                NUMBER;
-  v_title             VARCHAR2(59 CHAR);
+  v_title             VARCHAR2(43 CHAR);
   v_status            VARCHAR2(8 CHAR);
   v_release_date      DATE;
   v_vote_average      NUMBER;
@@ -36,10 +36,10 @@ BEGIN
                v_runtime || ' ' ||
                v_poster);
   --title
-  if (LENGTH(p_title) <= 59) 
+  if (LENGTH(p_title) <= 43) 
     then v_title := p_title;
-  else if (LENGTH(p_title) > 59)
-    then v_title := SUBSTR(p_title, 1, 59);
+  else if (LENGTH(p_title) > 43)
+    then v_title := SUBSTR(p_title, 1, 43);
     PROC_LOG('insert_movie: ' || p_id || ' title trunked ' || LENGTH(p_title) || ' => ' || LENGTH(v_title));
   end if;
   end if;

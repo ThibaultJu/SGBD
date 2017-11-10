@@ -63,7 +63,6 @@ BEGIN
       found := owa_pattern.match(str2, '^(.*)' || unistr('\2024') || '(.*)$', res);
       if found then
         insert_director(res(1), res(2));
-        dbms_output.put_line(film.id || '            '|| res(1) );
         insert_movie_director(film.id, res(1));
       end if;
       i := i +1;

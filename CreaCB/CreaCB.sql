@@ -64,7 +64,7 @@ create table movie_director (
   movie    number(6,0),
   director number(7,0),
   constraint m_d$pk primary key (movie, director),
-  constraint m_d$fk foreign key (director) references artist(id),
+  constraint m_d$fk foreign key (director) references director(id),
   constraint m_d$fk2 foreign key (movie) references movie(id)
 );
 

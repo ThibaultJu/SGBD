@@ -1,6 +1,6 @@
 create or replace PROCEDURE INSERT_STATUS(p_id IN NUMBER, p_stat IN VARCHAR2) AS
   
-v_stat   VARCHAR2(20 CHAR);
+v_stat   VARCHAR2(15 CHAR);
 
 BEGIN
   IF (p_stat = NULL OR p_stat = 'Rumored' OR p_stat = 'Released' OR p_stat = 'Planned' OR p_stat = 'Canceled') THEN v_stat := p_stat;

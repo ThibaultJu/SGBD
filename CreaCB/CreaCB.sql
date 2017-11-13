@@ -25,13 +25,13 @@ create table certification (
 create table director 
 (
   id   number(7,0),
-  name varchar2(20),
+  name varchar2(19),
   constraint director$pk primary key (id),
   constraint director$name$nn check (name is not null)
 );
 create table status (
   id          number(6,0),
-  name        varchar2(8),
+  name        varchar2(15),
   constraint status$pk primary key (id),
   constraint status$name$nn check (name is not null)
 );
@@ -47,7 +47,7 @@ create table genre (
 create table movie (
   id            number(6,0),
   title         varchar2(43),
-  status        VARCHAR2(8 CHAR),
+  status        VARCHAR2(15 CHAR),
   release_date  date,
   vote_average  number(2,1),
   vote_count    number(5,0),

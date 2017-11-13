@@ -12,7 +12,7 @@ create or replace PROCEDURE INSERT_MOVIE
 )AS
   v_id                NUMBER;
   v_title             VARCHAR2(43 CHAR);
-  v_status            VARCHAR2(8 CHAR);
+  v_status            VARCHAR2(15 CHAR);
   v_release_date      DATE;
   v_vote_average      NUMBER;
   v_vote_count        NUMBER;
@@ -46,25 +46,29 @@ BEGIN
   --status
   if (p_status = NULL or p_status = 'Post Production' or p_status = 'Rumored' or p_status = 'Released' or p_status = 'In Production' or p_status = 'Planned' or p_status = 'Canceled') then v_status := p_status;
   else v_status := null;
-      PROC_LOG('insert_movie: ' || p_id || ' statut set ра NULL');
+      PROC_LOG('insert_movie: ' || p_id || ' status set ра NULL');
   end if;
   --release_date
   v_release_date := p_release_date;
   --vote_average
-  IF(p_vote_average>=0 AND p_vote_average<=0)
+  IF(p_vote_average>=0 AND p_vote_average<=10)
   THEN v_vote_average := p_vote_average;
   else v_vote_average := 0;
   PROC_LOG('insert_movie: vote avg set р 0');
   END IF;
   --vote_count
-  v_vote_count   := p_vote_count;
+  IF(p_vote_count>=0)
+  THEN v_vote_count := p_vote_count;
+  else v_vote_count := 0;
+  PROC_LOG('insert_movie: vote_count set р 0');
+  end if;
   --certification
   IF (p_certif = NULL OR p_certif = 'PG-13' OR p_certif = 'G' OR p_certif = 'PG' OR p_certif = 'R' OR p_certif = 'NC-17') THEN v_certif := p_certif;
   ELSE v_certif := NULL;
     PROC_LOG('insert_movie: ' || p_id || ' set ра NULL');
   END IF;
   --runtime
-  if(p_runtime > 200) then v_runtime := NULL;
+  if(p_runtime > 135) then v_runtime := NULL;
       PROC_LOG('insert_movie: ' || p_id || ' runtime set ├а NULL');
   else v_runtime := p_runtime;
   end if;
@@ -79,7 +83,7 @@ BEGIN
    PROC_LOG('BLOB:' || 'Une erreur est survenue le blob est donc mis ├а NULL');
   END;
   insert into movie values(p_id, v_title, v_status, v_release_date, v_vote_average,v_vote_count, v_certif, v_runtime, post);
-dbms_output.put_line('INSERT OK' );
+dbms_output.put_line('INSERT DE ' || v_title || 'OK');
 EXCEPTION
   WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
   WHEN OTHERS THEN PROC_LOG('insert_movie: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);

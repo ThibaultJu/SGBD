@@ -14,12 +14,10 @@ BEGIN
   dbms_output.put_line(film.id || ' ' ||
                trim(film.title) || ' ' || 
                trim(film.status) || ' ' ||
-               trim(film.tagline) || ' ' ||
                film.release_date || ' ' ||
                film.vote_average || ' ' ||
                trim(film.certification) || ' ' ||
                film.runtime || ' ' ||
-               film.budget || ' ' ||
                film.poster_path || ' ' ||
                film.genres);
 

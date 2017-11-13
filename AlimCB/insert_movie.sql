@@ -68,8 +68,8 @@ BEGIN
     PROC_LOG('insert_movie: ' || p_id || ' set à  NULL');
   END IF;
   --runtime
-  if(p_runtime > 135) then v_runtime := NULL;
-      PROC_LOG('insert_movie: ' || p_id || ' runtime set Ã  NULL');
+  if(p_runtime > 135) then v_runtime := 135;
+      PROC_LOG('insert_movie: ' || p_id || ' runtime set a Val max acceptée');
   else v_runtime := p_runtime;
   end if;
   --poster

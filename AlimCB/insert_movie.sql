@@ -77,6 +77,7 @@ BEGIN
   IF p_poster IS NOT NULL THEN
     v_poster := 'http://image.tmdb.org/t/p/w185' || p_poster;
     post := HTTPURITYPE.CREATEURI(v_poster).getblob();
+    dbms_output.put_line('BLOB : OK ');
   END IF;
   EXCEPTION WHEN OTHERS THEN 
    post:=NULL; 

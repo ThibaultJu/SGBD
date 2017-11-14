@@ -12,6 +12,7 @@ create or replace PROCEDURE INSERT_MOVIE
 )AS
   v_id                NUMBER;
   v_title             VARCHAR2(43 CHAR);
+  c_title             VARCHAR2(200 CHAR);
   v_status            VARCHAR2(15 CHAR);
   v_release_date      DATE;
   v_vote_average      NUMBER;
@@ -36,11 +37,12 @@ BEGIN
                v_runtime || ' ' ||
                v_poster);
   --title
-  if (LENGTH(p_title) <= 43) 
-    then v_title := p_title;
-  else if (LENGTH(p_title) > 43)
-    then v_title := SUBSTR(p_title, 1, 43);
-    PROC_LOG('insert_movie: ' || p_id || ' title trunked ' || LENGTH(p_title) || ' => ' || LENGTH(v_title));
+  c_title := replace(p_title,unistr('\0027') , '');
+  if (LENGTH(c_title) <= 43) 
+    then v_title := c_title;
+  else if (LENGTH(c_title) > 43)
+    then v_title := SUBSTR(c_title, 1, 43);
+    PROC_LOG('insert_movie: ' || p_id || ' title trunked ' || LENGTH(c_title) || ' => ' || LENGTH(v_title));
   end if;
   end if;
   --status
@@ -65,7 +67,7 @@ BEGIN
   --certification
   IF (p_certif = NULL OR p_certif = 'PG-13' OR p_certif = 'G' OR p_certif = 'PG' OR p_certif = 'R' OR p_certif = 'NC-17') THEN v_certif := p_certif;
   ELSE v_certif := NULL;
-    PROC_LOG('insert_movie: ' || p_id || ' set ра NULL');
+    PROC_LOG('insert_movie: ' || p_id || ' certification set ра NULL');
   END IF;
   --runtime
   if(p_runtime > 135) then v_runtime := 135;

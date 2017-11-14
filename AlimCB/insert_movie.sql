@@ -37,13 +37,11 @@ BEGIN
                v_runtime || ' ' ||
                v_poster);
   --title
-  c_title := replace(p_title,unistr('\0027') , '');
-  if (LENGTH(c_title) <= 43) 
+  c_title := replace(p_title,unistr('\0027'));
+  if (LENGTH(c_title) < 43) 
     then v_title := c_title;
-  else if (LENGTH(c_title) > 43)
-    then v_title := SUBSTR(c_title, 1, 43);
+  else v_title := SUBSTR(c_title, 1, 43);
     PROC_LOG('insert_movie: ' || p_id || ' title trunked ' || LENGTH(c_title) || ' => ' || LENGTH(v_title));
-  end if;
   end if;
   --status
   if (p_status = NULL or p_status = 'Post Production' or p_status = 'Rumored' or p_status = 'Released' or p_status = 'In Production' or p_status = 'Planned' or p_status = 'Canceled') then v_status := p_status;
@@ -70,9 +68,11 @@ BEGIN
     PROC_LOG('insert_movie: ' || p_id || ' certification set à  NULL');
   END IF;
   --runtime
-  if(p_runtime > 135) then v_runtime := 135;
-      PROC_LOG('insert_movie: ' || p_id || ' runtime set a Val max acceptée');
-  else v_runtime := p_runtime;
+  if(p_runtime<0) then v_runtime := 0;
+  else if(p_runtime > 999) then v_runtime := 999;
+         PROC_LOG('insert_movie: ' || p_id || ' runtime set a Val max acceptée');
+        else v_runtime := p_runtime;
+         end if;
   end if;
   --poster
   BEGIN
@@ -85,8 +85,7 @@ BEGIN
    post:=NULL; 
    PROC_LOG('BLOB:' || 'Une erreur est survenue le blob est donc mis Ã  NULL');
   END;
-  insert into movie values(p_id, v_title, v_status, v_release_date, v_vote_average,v_vote_count, v_certif, v_runtime, post);
-dbms_output.put_line('INSERT DE ' || v_title || 'OK');
+  insert into movie values(p_id, trim(v_title), v_status, v_release_date, v_vote_average,v_vote_count, v_certif, v_runtime, post);
 EXCEPTION
   WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
   WHEN OTHERS THEN PROC_LOG('insert_movie: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);

@@ -56,7 +56,7 @@ create table movie (
   poster        blob,
   constraint movie$pk primary key (id),
   constraint movie$title$nn check (title is not null),
-  constraint movie$runtime$pg check (runtime>0),
+  constraint movie$runtime$pg check (runtime>=0),
   constraint movie$vote_average$zeroadix check (vote_average>=0 AND vote_average<=10)
 );
 

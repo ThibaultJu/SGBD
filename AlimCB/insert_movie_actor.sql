@@ -2,7 +2,7 @@ create or replace PROCEDURE INSERT_MOVIE_ACTOR(p_id IN NUMBER, p_idActor IN NUMB
 
 
 BEGIN
-
+    
   INSERT INTO MOVIE_ACTOR VALUES(p_id, p_idActor);
 
 EXCEPTION

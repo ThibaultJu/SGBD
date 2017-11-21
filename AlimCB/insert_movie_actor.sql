@@ -1,0 +1,11 @@
+create or replace PROCEDURE INSERT_MOVIE_ACTOR(p_id IN NUMBER, p_idActor IN NUMBER) AS
+
+
+BEGIN
+    
+  INSERT INTO MOVIE_ACTOR VALUES(p_id, p_idActor);
+
+EXCEPTION
+  WHEN DUP_VAL_ON_INDEX THEN PROC_LOG('insert_movie_actor: SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
+  WHEN OTHERS THEN PROC_LOG('insert_movie_actor: ' || p_id || ' SQLCODE : ' || SQLCODE || ' SQLERRM : ' || SQLERRM);
+END INSERT_MOVIE_ACTOR;

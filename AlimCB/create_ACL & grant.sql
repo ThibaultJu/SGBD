@@ -3,14 +3,15 @@
 CREATE OR REPLACE PROCEDURE ACL AS 
 
 BEGIN
-	DBMS_NETWORK_ACL_ADMIN.CREATE_ACL(acl		=> 'blob.xml',
-									description	=> 'BLOB images ACL',
-									principal	=> 'CB',
-									is_grant	=> TRUE,
-									privilege	=> 'connect');
-
-	DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL(acl	=> 'blob.xml',
-									host	=> 'image.tmdb.org');
+	begin
+  dbms_network_acl_admin.append_host_ace (
+    host => '*',
+    lower_port => 80,
+    upper_port => 80,
+    ace         =>  xs$ace_type(privilege_list => xs$name_list('http'),
+                          principal_name => 'cb',
+                          principal_type => xs_acl.ptype_db));
+end;
 
   --DBMS_NETWORK_ACL_ADMIN.DROP_ACL(acl         => 'blob.xml');                                 
 COMMIT;

@@ -1,5 +1,10 @@
 begin 
-GET_MOVIE(27205);
+GET_MOVIES_RANDOM(100);
 end;
 
-select * from genre;
+
+begin
+get_movie(27205);
+end;
+
+select runtime from Movies_ext where id = '27205';

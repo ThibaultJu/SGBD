@@ -83,7 +83,7 @@ BEGIN
   END IF;
   EXCEPTION WHEN OTHERS THEN 
    post:=NULL; 
-   PROC_LOG('BLOB:' || 'Une erreur est survenue le blob est donc mis ├а NULL');
+   PROC_LOG('BLOB:' || 'Une erreur est survenue le blob est donc mis ра NULL');
   END;
   insert into movie values(p_id, v_title, v_status, v_release_date, v_vote_average,v_vote_count, v_certif, v_runtime, post);
 dbms_output.put_line('INSERT DE ' || v_title || 'OK');

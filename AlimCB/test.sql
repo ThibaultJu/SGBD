@@ -1,5 +1,5 @@
 begin 
-GET_MOVIES_RANDOM(10);
+GET_MOVIES_RANDOM(100);
 end;
 
 

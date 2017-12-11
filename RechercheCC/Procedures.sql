@@ -1,36 +1,20 @@
--- RechercheFilm
-create or replace TYPE ACTEUR as table of ACT;
-
-create or replace TYPE ACT as object
-(
-    name VARCHAR2(20 BYTE)   
-);
-create or replace TYPE REALISATEUR as table of REA;
-
-create or replace TYPE REA as object
-(
-    name VARCHAR2(19 BYTE)   
-);
-create or replace TYPE TABLEID as table of TID;
-drop type TID;
-create or replace TYPE TID as object
-(
-    identifiant NUMBER(7,0)
-);
-
-
-
-create or replace procedure RechercheFilm(artiste in ACTEUR, realisateur in REALISATEUR, d in VARCHAR2, t in VARCHAR2, i out sys_refcursor) as
+create or replace procedure LoginUser(log in varchar2, ident out integer) as
+i number;
+logi varchar2(20);
+pwd varchar2(20);
 BEGIN
-declare
+  i := 1;
+  logi := substr(log, i, instr(log,'-',i)-i);
+  i :=instr(log,'-',i)+1;
+  pwd := substr(log, i, instr(log,'-',i)-i);
+  select id into ident from utilisateur where login = logi and password = pwd;
+END;
 
-type TID is record(
-id number(7,0));
-
-Type TABLEID is table of TID;
-ActId TABLEID;
-ReaId TABLEID;
-begin
+-- RechercheFilm
+create or replace procedure RechercheFilm(artiste in Actors_name, realisateur in Realisators_t, d in VARCHAR2, t in VARCHAR2, i out sys_refcursor) as
+ActId ACTORS_ID;
+ReaId ACTORS_ID;
+BEGIN
   select id bulk collect into ActId
   from movie_actor natural join artist
   where  movie_actor.actor = artist.id and artist.name in (select * from table(artiste));
@@ -48,7 +32,7 @@ begin
            where not exists (select COLUMN_VALUE
            from table(ActId) where not exists
            (select * from movie_actor mov2
-            where mov1.movie = mov2.movie AND (mov2.artist = COLUMN_VALUE)))))
+            where mov1.movie = mov2.movie AND (mov2.actor = COLUMN_VALUE)))))
         and (realisateur is not null or id in (select distinct movie
                   from movie_director mov1
                   where not exists (select COLUMN_VALUE
@@ -57,7 +41,6 @@ begin
                   from movie_director mov2
                   where mov1.movie = mov2.movie AND (mov2.director = COLUMN_VALUE)))));
 END;
-end;
 
 --RechercheID
 create or replace procedure RechercheID(ident in integer, i out sys_refcursor) as
@@ -79,6 +62,45 @@ BEGIN
   Exception
   when no_data_found then  p := 0;--renvoyer null
 END READVOTE;
+
+--RechercheDateA
+create or replace PROCEDURE RechercheDateA (d IN NUMBER, i out sys_refcursor ) AS 
+BEGIN
+  open i for select * from movie
+  where (extract(YEAR from release_date) < extract(YEAR from to_date(d, 'YYYY')));
+  
+  Exception
+  when no_data_found then  i := NULL;--renvoyer null
+END RechercheDateA;
+
+--RechercheDateB
+create or replace PROCEDURE RechercheDateB (d IN NUMBER, i out sys_refcursor ) AS 
+BEGIN
+  open i for select * from movie
+  where (extract(YEAR from release_date) = extract(YEAR from to_date(d, 'YYYY')));
+  
+  Exception
+  when no_data_found then  i := NULL;--renvoyer null
+END RechercheDateB;
+
+--RechercheDateE
+create or replace PROCEDURE RechercheDateE (d IN NUMBER, i out sys_refcursor ) AS 
+BEGIN
+  open i for select * from movie
+  where (extract(YEAR from release_date) > extract(YEAR from to_date(d, 'YYYY')));
+  
+  Exception
+  when no_data_found then  i := NULL;--renvoyer null
+END RechercheDateE;
+
+--ReadNumber
+create or replace PROCEDURE READNUMBER (IDFILM IN NUMBER, P OUT NUMBER) AS 
+BEGIN
+  select count(po) into p from vote where movie = idfilm;
+  
+  Exception
+  when no_data_found then  p := 0;--renvoyer null
+END READNUMBER;
 
 --ProcVote
 create or replace PROCEDURE PROCVOTE (P IN NUMBER, IDUSER IN NUMBER, IDFILM IN NUMBER ) AS 

@@ -89,3 +89,31 @@ CREATE TABLE LOG
   err             VARCHAR2(200),
   daterr          DATE
 );
+
+create table Utilisateur(
+  Id integer,
+  Login varchar2(20 char),
+  Password varchar2(20 char),
+  
+  constraint Id$Utilisateur$PrimaryKey primary key (Id),
+  constraint Login$Check check (Login is not null),
+  constraint Password$Check check (Password is not null)
+);
+
+create table vote(
+  us number,
+  movie number,
+  po number,
+  
+  CONSTRAINT User$Vote FOREIGN KEY (us) REFERENCES utilisateur(id),
+  CONSTRAINT Movie$Vote FOREIGN KEY (movie) REFERENCES movie(id)
+);
+
+create table commentaire(
+  us number,
+  movie number,
+  com varchar2(500),
+  
+  CONSTRAINT User$Commentaire FOREIGN KEY (us) REFERENCES utilisateur(id),
+  CONSTRAINT Movie$Commentaire FOREIGN KEY (movie) REFERENCES movie(id)
+);
